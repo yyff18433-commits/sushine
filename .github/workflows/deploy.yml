@@ -1,0 +1,68 @@
+# 把 Sushine 发布到 GitHub Pages
+#
+# 触发：push 到 main 分支，或在 Actions 页面手动点 Run workflow
+# 产物：https://<用户名>.github.io/<仓库名>/
+#
+# 说明：
+#  - 这是纯静态部署，GitHub Pages 没有 Node 后端，
+#    所以 /api/ai、/api/recognize、/api/model 三个接口不存在。
+#    前端已做降级：备注/追问走本地规则，看图识别退化为本地估算。
+#  - 需要 AI 也真跑：把项目部署到带 Serverless 的平台（如 Vercel），见 README。
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同时只跑一个部署，新的推送取消排队中的旧任务
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        # ⚠️ 不要加 enablement: true
+        # 默认的 GITHUB_TOKEN 没有建站权限，加了会在这一步 403 失败。
+        # Pages 需要到 Settings → Pages → Source 选「GitHub Actions」手动开启一次（只需一次）。
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

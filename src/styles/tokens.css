@@ -1,0 +1,90 @@
+/**
+ * Sushine Design Tokens  v1.0
+ * 来源：寿司list_视觉规范与组件库.html / 寿司list_UI.html
+ * 命名与设计稿 token 一一对应，改这里即可全局换肤。
+ */
+:root {
+  /* ---------- 主色 · 陶土橘 Terracotta ---------- */
+  --or-50: #fdf2ea;
+  --or-100: #fadfcc;
+  --or-200: #f4c3a6;
+  --or-300: #e9a47e;
+  --or-400: #df9268;
+  --or-500: #d9885f;
+  --or-600: #c1734c;
+  --or-700: #b96b45;
+  --or-800: #8f5133;
+  --or-900: #5e3623;
+
+  --or: var(--or-500); /* 主按钮 / 当日高亮 */
+  --or-d: var(--or-700); /* 按下态 / 深色文字 */
+  --or-s: var(--or-100); /* 描边 / 选中 */
+  --or-xs: var(--or-50); /* 浅底 */
+
+  /* ---------- 中性 · 纸张与墨 ---------- */
+  --card: #fffdf9;
+  --paper: #fbf6ee;
+  --paper-2: #f5ebdd;
+  --paper-3: #efe1ce;
+  --line: #e6d7c3;
+
+  --ink: #3d332b;
+  --ink-2: #7c6c5e;
+  --ink-3: #a99c8d;
+  --shell: #2b211b; /* 相机遮罩 / 机身外框 */
+
+  /* ---------- 辅助 · 贴纸色（不参与交互） ---------- */
+  --matcha: #8fa37c;
+  --butter: #f2d69b;
+  --sky: #a6b9c7;
+  --rose: #dfa29c;
+
+  /* ---------- 语义色 ---------- */
+  --ok: #7c9270;
+  --warn: #d9a03f;
+  --err: #c4624f;
+
+  /* ---------- 圆角 ---------- */
+  --r-8: 8px;
+  --r-14: 14px;
+  --r-16: 16px;
+  --r-18: 18px;
+  --r-20: 20px;
+  --r-24: 24px;
+  --r-28: 28px;
+  --r-36: 36px;
+  --r-pill: 999px;
+
+  /* ---------- 间距（4 的倍数） ---------- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 28px;
+  --sp-8: 32px;
+
+  --page-x: 20px; /* 页面左右留白 */
+  --card-pad: 13px; /* 卡片内边距 */
+  --card-gap: 18px; /* 卡片间距 */
+  --section-gap: 28px; /* 区块间距 */
+  --rail-w: 244px; /* 大屏左侧导航宽度 */
+
+  /* ---------- 阴影：硬边 + 柔光，禁止纯柔光 ---------- */
+  --sh-0: 0 2px 0 #eddfcb;
+  --sh-1: 0 3px 0 #ebdcc8, 0 10px 22px rgba(150, 110, 75, 0.1);
+  --sh-2: 0 3px 0 #e0cdb4, 0 18px 38px rgba(150, 110, 75, 0.18);
+  --sh-3: 0 4px 0 var(--or-d), 0 10px 20px rgba(185, 107, 69, 0.22);
+  --sh-fab: 0 12px 24px rgba(185, 107, 69, 0.34);
+
+  /* ---------- 字体 ---------- */
+  --sans: -apple-system, "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei UI",
+    "Microsoft YaHei", system-ui, sans-serif;
+  --hand: "STKaiti", "KaiTi", "Kaiti SC", "Songti SC", serif;
+  --mono: ui-monospace, Menlo, Consolas, monospace;
+
+  /* ---------- 动效 ---------- */
+  --ease: cubic-bezier(0.32, 0.72, 0.3, 1);
+  --dur: 240ms;
+}

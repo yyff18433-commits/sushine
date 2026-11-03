@@ -1,0 +1,21 @@
+{
+  "name": "sushine",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Sushine · 食物手账 App 前端（Vue3 + Vite 静态骨架）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^4.3.2",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.0.7"
+  }
+}

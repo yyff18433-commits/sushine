@@ -1,0 +1,204 @@
+/* ============================================================
+   全局基础样式 + 手机外壳骨架
+   ============================================================ */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--ink);
+  background: #f0e8dd;
+  background-image: radial-gradient(circle at 8% 0%, #faf5ed, transparent 45%),
+    radial-gradient(circle at 96% 96%, #ebe0d0, transparent 42%);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 居中容器：注意不能让 #app 继承 flex，否则子元素 width:100% 会塌陷 */
+#app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+input {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------------- 手机外壳 ---------------- */
+.phone {
+  position: relative;
+  width: 100%;
+  max-width: 390px;
+  height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  background: radial-gradient(130% 86% at 50% 16%, #fffdfa 0%, #faf6f0 56%, #f6f0e7 100%);
+  /* 建立包含块：让 fixed 的弹窗 / toast 被限制在机身内 */
+  transform: translateZ(0);
+}
+
+@media (min-width: 768px) {
+  .phone {
+    /* 大屏：整屏应用，不再模拟手机壳 */
+    max-width: none;
+    width: 100%;
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+/* 纸纹：feTurbulence 噪点，3.5% 透明度，不压文字 */
+.phone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+
+/* ---------------- 滚动容器 ---------------- */
+.screen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.screen::-webkit-scrollbar {
+  display: none;
+}
+
+.screen--tab {
+  padding-bottom: 122px; /* 给底部导航留位 */
+}
+
+/* ---------------- 页面通用 ---------------- */
+.page {
+  position: relative;
+  min-height: 100%;
+  padding: 58px var(--page-x) 28px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.page-sub {
+  margin: 0 0 6px;
+  font-size: 10.5px;
+  color: var(--ink-3);
+  letter-spacing: 0.02em;
+}
+
+.muted {
+  color: var(--ink-3);
+}
+
+.hand {
+  font-family: var(--hand);
+}
+
+/* 页面切换过渡：向前推入 / 向后退出，位移很小，避免「界面抖动」 */
+.fwd-enter-active,
+.fwd-leave-active,
+.back-enter-active,
+.back-leave-active {
+  transition: opacity 190ms var(--ease), transform 220ms var(--ease);
+}
+
+.fwd-enter-from {
+  opacity: 0;
+  transform: translateX(18px);
+}
+
+.fwd-leave-to {
+  opacity: 0;
+  transform: translateX(-12px);
+}
+
+.back-enter-from {
+  opacity: 0;
+  transform: translateX(-18px);
+}
+
+.back-leave-to {
+  opacity: 0;
+  transform: translateX(12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fwd-enter-active,
+  .fwd-leave-active,
+  .back-enter-active,
+  .back-leave-active {
+    transition: none;
+  }
+
+  .fwd-enter-from,
+  .fwd-leave-to,
+  .back-enter-from,
+  .back-leave-to {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   ≥768px 大屏（平板 / 电脑）：左侧导航 + 宽内容区
+   注意：必须放在 .screen / .page 定义之后，否则会被覆盖
+   ============================================================ */
+@media (min-width: 768px) {
+  .screen {
+    left: var(--rail-w);
+  }
+
+  .screen--tab {
+    padding-bottom: 0;
+  }
+
+  .page {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 40px 32px 48px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .page {
+    max-width: 1080px;
+  }
+}

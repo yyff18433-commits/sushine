@@ -1,0 +1,239 @@
+/* ============================================================
+   全站动效（组员 5）
+   · 关键帧集中在这里，页面里只引用类名 / animation
+   · 所有动效都遵守 prefers-reduced-motion：该关就关，不做花架子
+   ============================================================ */
+
+/* ---------- 关键帧 ---------- */
+
+/* 卡片弹出：从略小 + 下移 → 落位，带一点回弹 */
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.94);
+  }
+  62% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.015);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 列表项错位入场 */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 新记录落下：比普通入场更「重」一些 */
+@keyframes drop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-22px) scale(0.96);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(4px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 高亮：告诉用户「刚加的是这一条」 */
+@keyframes flash-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 136, 95, 0.55);
+    background-color: rgba(253, 242, 234, 0.9);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgba(217, 136, 95, 0);
+    background-color: rgba(253, 242, 234, 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 136, 95, 0);
+    background-color: transparent;
+  }
+}
+
+/* 收藏：心形先压扁再弹起 */
+@keyframes heart-pop {
+  0% {
+    transform: scale(1);
+  }
+  28% {
+    transform: scale(0.72);
+  }
+  58% {
+    transform: scale(1.28);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 收藏粒子：从中心朝四周散开 */
+@keyframes spark-fly {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.9);
+  }
+}
+
+/* 选中：轻轻抖一下，像贴纸被捏起来 */
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-2.4deg);
+  }
+  75% {
+    transform: rotate(2.4deg);
+  }
+}
+
+/* 呼吸：用于「识别中」的提示点 */
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.86);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 扫描线：在照片框里上下扫 */
+@keyframes scan-sweep {
+  0% {
+    top: 6%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    top: 94%;
+    opacity: 0;
+  }
+}
+
+/* 进度环呼吸光 */
+@keyframes halo {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.04);
+  }
+}
+
+/* 数字滚动时的高光 */
+@keyframes count-glow {
+  from {
+    color: var(--or-d);
+  }
+  to {
+    color: #4a3e34;
+  }
+}
+
+/* 贴纸落下（贴到照片上时） */
+@keyframes sticker-drop {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(-20deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.12) rotate(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+/* 下拉抽屉 */
+@keyframes drawer-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* ---------- 可复用类 ---------- */
+
+.a-pop {
+  animation: pop-in 420ms var(--ease) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.a-rise {
+  animation: rise-in 380ms var(--ease) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.a-drop {
+  animation: drop-in 460ms var(--ease) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.a-flash {
+  animation: flash-ring 1.6s var(--ease) 1;
+}
+
+.a-wiggle {
+  animation: wiggle 320ms var(--ease);
+}
+
+/* 点击反馈统一给 0.96 的回弹，触屏才「像有东西」 */
+.tap {
+  transition: transform 140ms var(--ease);
+}
+
+.tap:active {
+  transform: scale(0.96);
+}
+
+/* ---------- 无障碍 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .a-pop,
+  .a-rise,
+  .a-drop,
+  .a-flash,
+  .a-wiggle,
+  .tap {
+    animation: none !important;
+    transition: none !important;
+  }
+}
